@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="oktabu/oktabu.vcxproj" Id="9321776f-da98-4f77-b245-34597cf19888" />
+</Solution>
