@@ -127,10 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="oktabu.cpp" />
+    <ClCompile Include="data.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Solomon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="cvrptw1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="data.h" />
+    <ClInclude Include="Solomon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
