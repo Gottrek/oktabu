@@ -18,12 +18,25 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 
-	for (int i = 1; i < argc; ++i) {
-		Instance instance;
-		instance.loadFromFile(argv[i]);
-		cout << "Wczytano instancje z pliku: " << argv[i] << endl;
-		cout << "Liczba klientow: " << instance.getCustomerCount() << endl;
-		cout << "Pojemnosc pojazdu: " << instance.getCapacity() << endl;
-		cout << "Odleglosc miedzy klientem 0 a 1: " << fixed << setprecision(2) << instance.getDistance(0, 1) << endl;
+	
+	Instance instance;
+	instance.loadFromFile(argv[1]);
+	cout << "Wczytano instancje z pliku: " << argv[1] << endl;
+	cout << "Liczba klientow: " << instance.getCustomerCount() << endl;
+	cout << "Pojemnosc pojazdu: " << instance.getCapacity() << endl;
+	cout << "Odleglosc miedzy klientem 0 a 1: " <<  instance.getDistance(0, 1) << endl;
+	Solomon solver(instance);
+	Solution solution = solver.run();
+	if (solution.routes.empty()) {
+		cout << "Nie znaleziono rozwiazania.\n";
+		return 0;
+	}
+	for (int i = 0; i < solution.routes.size(); ++i) {
+		cout << "Trasa " << i + 1 << ": ";
+		for (int customerID : solution.routes[i].path) {
+			cout << customerID << " ";
+		}
+		cout << "| Dystans: "  << solution.routes[i].totalDistance
+			<< " | Czas: " << solution.routes[i].totalTime << endl;
 	}
 }

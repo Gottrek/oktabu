@@ -12,5 +12,6 @@ public:
 		isVisited(instance.getCustomerCount(), false) {
 	}
 		bool canInsert(const Route& currentRoute, int customerID, int position);
-		// void run();
+		double calculateScore(const Route& currentRoute, int customerID, int position);
+		Solution run();
 };

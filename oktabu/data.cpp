@@ -13,7 +13,7 @@ void Instance::loadFromFile(const string& filename) {
 	ifstream file(filename);
 	if (!file.is_open()) {
 		cerr << "Nie mozna otworzyc pliku: " << filename << endl;
-		return;
+		exit(1);
 	}
 	string smieci;
 	file >> smieci;

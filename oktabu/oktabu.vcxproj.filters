@@ -26,14 +26,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="cvrptw1.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="data.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
     <ClInclude Include="Solomon.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\cvrptw1.txt" />
+    <Text Include="..\cvrptw2.txt" />
+    <Text Include="..\cvrptw3.txt" />
+    <Text Include="..\cvrptw4.txt" />
+    <Text Include="c101.txt" />
+    <Text Include="c102.txt" />
+    <Text Include="c103.txt" />
+    <Text Include="r101.txt" />
+    <Text Include="r102.txt" />
+    <Text Include="r103.txt" />
   </ItemGroup>
 </Project>
