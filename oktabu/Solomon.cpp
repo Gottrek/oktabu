@@ -53,7 +53,7 @@ double Solomon::calculateScore(const Route& currentRoute, int customerID, int po
 		arrivalTime = currentTime + travelTime;
 		double startServiceTime = std::max(arrivalTime, (double)cust.readyTime);
 		finishServiceTime = startServiceTime + cust.serviceTime;
-
+		currentTime = finishServiceTime;
 	}
 	double timeDiff = finishServiceTime - currentRoute.totalTime;
 	double distanceDiff = currentDistance - currentRoute.totalDistance;
@@ -65,19 +65,24 @@ Solution Solomon::run() {
 	Solution solution;
 	solution.totalDistance = 0.0;
 	Customer depot = data.getCustomer(0);
+
 	for (int i = 1; i < data.getCustomerCount(); ++i) {
 		isVisited[i] = false;
 		Customer cust = data.getCustomer(i);
-		if (cust.demand > data.getCapacity()) {
-			return Solution(); // nie ma rozwiazania
-		}
-		if (cust.dueDate < data.getDistance(0, i)) {
-			return Solution(); // nie ma rozwiazania
-		}
-		if ((double)depot.dueDate < std::max((double)cust.readyTime, (double)data.getDistance(0, i)) + data.getDistance(0, i) + (double)cust.serviceTime) {
-			return Solution(); // nie ma rozwiazania
-		}
+		bool impossible = false;
 
+		if (cust.demand > data.getCapacity()) impossible = true;
+		if (cust.dueDate < data.getDistance(0, i)) impossible = true;
+
+		double arrivalTime = data.getDistance(0, i);
+		double startServiceTime = std::max(arrivalTime, (double)cust.readyTime);
+		double returnTime = startServiceTime + cust.serviceTime + data.getDistance(i, 0);
+		if (arrivalTime > cust.dueDate) impossible = true;
+		if (returnTime > depot.dueDate) impossible = true;
+		if (impossible) {
+			solution.setNoSolution();
+			return solution;
+		}
 	}
 	int visitedCount = 1; // uwaga
 	while (visitedCount < data.getCustomerCount()) {
@@ -88,6 +93,7 @@ Solution Solomon::run() {
 		route.totalTime = 0.0;
 
 		bool clientAdded = true;
+		bool isRouteEmpty = true;
 		double bestScore = -INFINITY;
 		int bestCustomer = -1;
 		int bestPosition = -1;
@@ -116,26 +122,61 @@ Solution Solomon::run() {
 				isVisited[bestCustomer] = true;
 				visitedCount++;
 				clientAdded = true;
+				isRouteEmpty = false;
 				// aktualizuj dystans i czas trasy
 				route.totalDistance = 0.0;
-				route.totalTime = 0.0;
+				double currentTime = 0.0;
+				// route.totalTime = 0.0;
 				for (int i = 1; i < route.path.size(); ++i) {
 					int prevNode = route.path[i - 1];
 					int currNode = route.path[i];
 					const Customer& cust = data.getCustomer(currNode);
+
 					route.totalDistance += data.getDistance(prevNode, currNode);
 
 					double travelTime = data.getDistance(prevNode, currNode);
-					double arrivalTime = route.totalTime + travelTime;
+					double arrivalTime = currentTime + travelTime;
 					double startServiceTime = std::max(arrivalTime, (double)cust.readyTime);
-					route.totalTime = startServiceTime + cust.serviceTime;
+					currentTime = startServiceTime + cust.serviceTime;
 				}
+				route.totalTime = currentTime;
 			}
 			else {
 				clientAdded = false;
 			}
 		}
-		solution.routes.push_back(route);
+		if (isRouteEmpty) {
+			solution.setNoSolution();
+			return solution;
+		}
+		solution.addRoute(route);
 	}
 	return solution;
+}
+
+Solution Solomon::reduceVehicles(const Solution& initialSolution) {
+		Solution bestSolution = initialSolution;
+		int smallestRouteLP = -1;
+		int smallestLoad = INFINITY;
+		for (int i = 0; i < initialSolution.routes.size(); ++i) {
+			if (initialSolution.routes[i].currentLoad < smallestLoad) {
+				smallestLoad = initialSolution.routes[i].currentLoad;
+				smallestRouteLP = i;
+			}
+		}
+		std::vector<int> lonelyCustomers = initialSolution.routes[smallestRouteLP].path;
+		lonelyCustomers.erase(lonelyCustomers.begin()); // usun depot na poczatku
+		lonelyCustomers.pop_back();
+		for (int i = 0; i < lonelyCustomers.size(); ++i) {
+			for (int j = 0; j < bestSolution.routes.size(); ++j) {
+				if (j == smallestRouteLP) continue;
+				if (bestSolution.routes[j].currentLoad + data.getCustomer(lonelyCustomers[i]).demand > data.getCapacity()) continue;
+				if (bestSolution.routes[j].totalTime + data.getCustomer(lonelyCustomers[i]).serviceTime > data.getCustomer(0).dueDate) continue;
+				for (int k = 0; k < bestSolution.routes[j].path.size(); ++k) {
+					if (!canInsert(bestSolution.routes[j], lonelyCustomers[i], j)) continue;
+					// dalej do napisania, nw czy dobrze
+				}
+			}
+		}
+	return bestSolution;
 }

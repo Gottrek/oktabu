@@ -14,29 +14,23 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
-		cerr << "Podaj nazwe pliku jako argument\n";
+		cerr << "Podaj nazwe pliku z instancja jako pierwszy argument i plik do zapisu rozwiazania jako drugi argument\n";
 		return 1;
 	}
-
 	
 	Instance instance;
-	instance.loadFromFile(argv[1]);
-	cout << "Wczytano instancje z pliku: " << argv[1] << endl;
-	cout << "Liczba klientow: " << instance.getCustomerCount() << endl;
-	cout << "Pojemnosc pojazdu: " << instance.getCapacity() << endl;
-	cout << "Odleglosc miedzy klientem 0 a 1: " <<  instance.getDistance(0, 1) << endl;
+	if (!instance.loadFromFile(argv[1])) {
+		cerr << "Nie mozna otworzyc pliku: " << argv[1] << endl;
+		return 1;
+	}
+	cout << "Wczytano instancje z pliku: " << argv[1] << " liczba klientow: " << instance.getCustomerCount() << endl;
 	Solomon solver(instance);
 	Solution solution = solver.run();
-	if (solution.routes.empty()) {
-		cout << "Nie znaleziono rozwiazania.\n";
-		return 0;
-	}
-	for (int i = 0; i < solution.routes.size(); ++i) {
-		cout << "Trasa " << i + 1 << ": ";
-		for (int customerID : solution.routes[i].path) {
-			cout << customerID << " ";
-		}
-		cout << "| Dystans: "  << solution.routes[i].totalDistance
-			<< " | Czas: " << solution.routes[i].totalTime << endl;
-	}
+	
+	solution.printToConsole();
+
+	std::string outputFilename;
+	if (argc < 3) { outputFilename = "rozwiazanie.txt"; }
+	else { outputFilename = argv[2]; }
+	solution.saveToFile(outputFilename);
 }

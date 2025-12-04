@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
 
 struct Customer {
 	int id;
@@ -13,15 +16,24 @@ struct Customer {
 
 struct Route {
 	std::vector<int> path; // IDs of customers in the route
+	int currentLoad;
 	double totalDistance;
 	double totalTime;
-	int currentLoad;
 };
 
-struct Solution {
+class Solution {
+public:
 	std::vector<Route> routes;
 	double totalDistance;
 	double totalTime;
+	bool found;
+
+	Solution();
+	void setNoSolution();
+	void addRoute(const Route& route);
+
+	void printToConsole() const;
+	void saveToFile(const std::string& filename) const;
 };
 
 class Instance {
@@ -30,7 +42,7 @@ private:
 	std::vector<std::vector<double>> distanceMatrix;
 	int vehicleCapacity;
 public:
-	void loadFromFile(const std::string& filename);
+	bool loadFromFile(const std::string& filename);
 
 	double getDistance(int i, int j) const { // gettery
 		return distanceMatrix[i][j];
