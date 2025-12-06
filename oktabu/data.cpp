@@ -42,7 +42,7 @@ void Solution::printToConsole() const {
 			cout << route.path[j];
 			if (j < route.path.size() - 1) cout << " -> ";
 		}
-		cout << " | Dystans: " << route.totalDistance << " | Czas: " << route.totalTime << endl;
+		cout << " | Dystans: " << route.totalDistance << " | Czas: " << route.totalTime << "| Zaladunek: " << route.currentLoad << endl;
 	}
 	cout << "Calkowity dystans: " << totalDistance << endl;
 	cout << "Calkowity czas: " << totalTime << endl;

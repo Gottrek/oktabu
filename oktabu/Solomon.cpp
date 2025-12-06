@@ -156,27 +156,83 @@ Solution Solomon::run() {
 
 Solution Solomon::reduceVehicles(const Solution& initialSolution) {
 		Solution bestSolution = initialSolution;
-		int smallestRouteLP = -1;
-		int smallestLoad = INFINITY;
-		for (int i = 0; i < initialSolution.routes.size(); ++i) {
-			if (initialSolution.routes[i].currentLoad < smallestLoad) {
-				smallestLoad = initialSolution.routes[i].currentLoad;
-				smallestRouteLP = i;
-			}
-		}
-		std::vector<int> lonelyCustomers = initialSolution.routes[smallestRouteLP].path;
-		lonelyCustomers.erase(lonelyCustomers.begin()); // usun depot na poczatku
-		lonelyCustomers.pop_back();
-		for (int i = 0; i < lonelyCustomers.size(); ++i) {
-			for (int j = 0; j < bestSolution.routes.size(); ++j) {
-				if (j == smallestRouteLP) continue;
-				if (bestSolution.routes[j].currentLoad + data.getCustomer(lonelyCustomers[i]).demand > data.getCapacity()) continue;
-				if (bestSolution.routes[j].totalTime + data.getCustomer(lonelyCustomers[i]).serviceTime > data.getCustomer(0).dueDate) continue;
-				for (int k = 0; k < bestSolution.routes[j].path.size(); ++k) {
-					if (!canInsert(bestSolution.routes[j], lonelyCustomers[i], j)) continue;
-					// dalej do napisania, nw czy dobrze
+		Solution tempSolution = initialSolution;
+		std::vector<bool> checkedRoutes(initialSolution.routes.size(), false);
+		while (true) {
+			tempSolution = initialSolution;
+			int smallestRouteLP = -1;
+			int smallestLoad = INFINITY;
+			for (int i = 0; i < initialSolution.routes.size(); ++i) {
+				if (initialSolution.routes[i].currentLoad < smallestLoad && checkedRoutes[i] == false) {
+					smallestLoad = initialSolution.routes[i].currentLoad;
+					smallestRouteLP = i;
 				}
 			}
+			if (smallestRouteLP == -1) return bestSolution;
+
+			tempSolution.routes.erase(tempSolution.routes.begin() + smallestRouteLP);
+			std::vector<int> lonelyCustomers = initialSolution.routes[smallestRouteLP].path;
+			lonelyCustomers.erase(lonelyCustomers.begin()); // usun depot na poczatku
+			lonelyCustomers.pop_back(); // i na koncu
+			
+			bool everyClientAdded = true;
+
+			for (int i = 0; i < lonelyCustomers.size(); ++i) { // dla kazdego klienta do upchniecia
+				bool clientAdded = false;
+				double bestScore = -INFINITY;
+				int bestPosition = -1;
+				int bestRouteLP = -1;
+				for (int j = 0; j < tempSolution.routes.size(); ++j) { // dla kazdej trasy w rozwiazaniu tymczasowym
+					if (tempSolution.routes[j].currentLoad + data.getCustomer(lonelyCustomers[i]).demand > data.getCapacity()) continue;
+					bestPosition = -1;
+					for (int k = 1; k < tempSolution.routes[j].path.size(); ++k) { // dla kazdej pozycji w trasie
+						double score = calculateScore(tempSolution.routes[j], lonelyCustomers[i], k);
+						std::cout << "Trasa " << j << " Poz " << k << " - Brak miejsca/czasu\n";
+						if (score == -INFINITY) std::cout << "wyrzucilem\n";
+						if (score == -INFINITY) continue;
+						if (score > bestScore) {
+							clientAdded = true;
+							bestScore = score;
+							bestRouteLP = j;
+							bestPosition = k;
+						}
+					}
+				}
+				if (!clientAdded) { // nie udalo sie dodac klienta
+					checkedRoutes[smallestRouteLP] = true;
+					everyClientAdded = false;
+					break;
+				}
+				if (bestRouteLP < 0) return bestSolution; // bezpieczenstwo, moze sie da usunac
+				tempSolution.routes[bestRouteLP].path.insert(tempSolution.routes[bestRouteLP].path.begin() + bestPosition, lonelyCustomers[i]);
+				tempSolution.routes[bestRouteLP].currentLoad += data.getCustomer(lonelyCustomers[i]).demand;
+				clientAdded = true;
+				// aktualizuj dystans i czas trasy
+				tempSolution.routes[bestRouteLP].totalDistance = 0.0;
+				double currentTime = 0.0;
+				for (int m = 1; m < tempSolution.routes[bestRouteLP].path.size(); ++m) {
+					int prevNode = tempSolution.routes[bestRouteLP].path[m - 1];
+					int currNode = tempSolution.routes[bestRouteLP].path[m];
+					const Customer& cust = data.getCustomer(currNode);
+
+					tempSolution.routes[bestRouteLP].totalDistance += data.getDistance(prevNode, currNode);
+
+					double travelTime = data.getDistance(prevNode, currNode);
+					double arrivalTime = currentTime + travelTime;
+					double startServiceTime = std::max(arrivalTime, (double)cust.readyTime);
+					currentTime = startServiceTime + cust.serviceTime;
+				}
+				tempSolution.routes[bestRouteLP].totalTime = currentTime;
+			}
+			if (!everyClientAdded) continue;
+			break;
 		}
+	tempSolution.totalDistance = 0.0;
+	tempSolution.totalTime = 0.0;
+	for (int i = 0; i < tempSolution.routes.size(); ++i) {
+		tempSolution.totalDistance += tempSolution.routes[i].totalDistance;
+		tempSolution.totalTime += tempSolution.routes[i].totalTime;
+	}
+	bestSolution = tempSolution;
 	return bestSolution;
 }

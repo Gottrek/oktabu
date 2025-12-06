@@ -26,7 +26,6 @@ int main(int argc, char* argv[]) {
 	cout << "Wczytano instancje z pliku: " << argv[1] << " liczba klientow: " << instance.getCustomerCount() << endl;
 	Solomon solver(instance);
 	Solution solution = solver.run();
-	
 	solution.printToConsole();
 
 	std::string outputFilename;
