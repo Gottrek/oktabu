@@ -356,6 +356,18 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+# --- MOJE DODATKI ---
+# Ignoruj wyniki testów
+wyniki_raw/
+wyniki_csv/
+rozwiazanie.txt
+temp_out.txt
+
+# Upewnij się, że ignorujemy folder builda w każdej lokalizacji
+x64/
+Debug/
+Release/
+
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
