@@ -104,5 +104,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="testerka.py" />
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>
