@@ -24,6 +24,9 @@
     <ClCompile Include="Solomon.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="tabu.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data.h">
@@ -32,17 +35,74 @@
     <ClInclude Include="Solomon.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="tabu.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\cvrptw1.txt" />
-    <Text Include="..\cvrptw2.txt" />
-    <Text Include="..\cvrptw3.txt" />
-    <Text Include="..\cvrptw4.txt" />
-    <Text Include="c101.txt" />
-    <Text Include="c102.txt" />
-    <Text Include="c103.txt" />
-    <Text Include="r101.txt" />
-    <Text Include="r102.txt" />
-    <Text Include="r103.txt" />
+    <Text Include="ptest\C101.txt" />
+    <Text Include="ptest\C102.txt" />
+    <Text Include="ptest\C103.txt" />
+    <Text Include="ptest\C104.txt" />
+    <Text Include="ptest\C105.txt" />
+    <Text Include="ptest\C106.txt" />
+    <Text Include="ptest\C107.txt" />
+    <Text Include="ptest\C108.txt" />
+    <Text Include="ptest\C109.txt" />
+    <Text Include="ptest\C201.txt" />
+    <Text Include="ptest\C202.txt" />
+    <Text Include="ptest\C203.txt" />
+    <Text Include="ptest\C204.txt" />
+    <Text Include="ptest\C205.txt" />
+    <Text Include="ptest\C206.txt" />
+    <Text Include="ptest\C207.txt" />
+    <Text Include="ptest\C208.txt" />
+    <Text Include="ptest\cvrptw1.txt" />
+    <Text Include="ptest\cvrptw2.txt" />
+    <Text Include="ptest\cvrptw3.txt" />
+    <Text Include="ptest\cvrptw4.txt" />
+    <Text Include="ptest\m2kvrptw-0.txt" />
+    <Text Include="ptest\R101.txt" />
+    <Text Include="ptest\R102.txt" />
+    <Text Include="ptest\R103.txt" />
+    <Text Include="ptest\R104.txt" />
+    <Text Include="ptest\R105.txt" />
+    <Text Include="ptest\R106.txt" />
+    <Text Include="ptest\R107.txt" />
+    <Text Include="ptest\R108.txt" />
+    <Text Include="ptest\R109.txt" />
+    <Text Include="ptest\R110.txt" />
+    <Text Include="ptest\R111.txt" />
+    <Text Include="ptest\R112.txt" />
+    <Text Include="ptest\R201.txt" />
+    <Text Include="ptest\R202.txt" />
+    <Text Include="ptest\R203.txt" />
+    <Text Include="ptest\R204.txt" />
+    <Text Include="ptest\R205.txt" />
+    <Text Include="ptest\R206.txt" />
+    <Text Include="ptest\R207.txt" />
+    <Text Include="ptest\R208.txt" />
+    <Text Include="ptest\R209.txt" />
+    <Text Include="ptest\R210.txt" />
+    <Text Include="ptest\R211.txt" />
+    <Text Include="ptest\RC101.txt" />
+    <Text Include="ptest\RC102.txt" />
+    <Text Include="ptest\RC103.txt" />
+    <Text Include="ptest\RC104.txt" />
+    <Text Include="ptest\RC105.txt" />
+    <Text Include="ptest\RC106.txt" />
+    <Text Include="ptest\RC107.txt" />
+    <Text Include="ptest\RC108.txt" />
+    <Text Include="ptest\RC201.txt" />
+    <Text Include="ptest\RC202.txt" />
+    <Text Include="ptest\RC203.txt" />
+    <Text Include="ptest\RC204.txt" />
+    <Text Include="ptest\RC205.txt" />
+    <Text Include="ptest\RC206.txt" />
+    <Text Include="ptest\RC207.txt" />
+    <Text Include="ptest\RC208.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="testerka.py" />
   </ItemGroup>
 </Project>

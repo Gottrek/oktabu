@@ -14,8 +14,38 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
-		cerr << "Podaj nazwe pliku z instancja jako pierwszy argument i plik do zapisu rozwiazania jako drugi argument\n";
+		cerr << "Daj mi plik wejsciowy\n";
 		return 1;
+	}
+
+	string inputFilename = argv[1];
+	string outputFilename = "rozwiazanie.txt";
+	int tabuTenure = 10;
+	int maxIterations = 1000;
+	double alphaPenalty = 1.0;
+	double betaPenalty = 1.0;
+
+	for (int i = 2; i < argc; ++i) { // flagowe odczytywanki
+		string arg = argv[i];
+		if (arg == "-o" && i + 1 < argc) {
+			outputFilename = argv[++i];
+		}
+		else if (arg == "-t" && i + 1 < argc) {
+			tabuTenure = stoi(argv[++i]);
+		}
+		else if (arg == "-i" && i + 1 < argc) {
+			maxIterations = stoi(argv[++i]);
+		}
+		else if (arg == "-a" && i + 1 < argc) {
+			alphaPenalty = stod(argv[++i]);
+		}
+		else if (arg == "-b" && i + 1 < argc) {
+			betaPenalty = stod(argv[++i]);
+		}
+		else {
+			cerr << "Nieznany argument: " << arg << endl;
+			return 1;
+		}
 	}
 	
 	Instance instance;
@@ -24,12 +54,19 @@ int main(int argc, char* argv[]) {
 		return 1;
 	}
 	cout << "Wczytano instancje z pliku: " << argv[1] << " liczba klientow: " << instance.getCustomerCount() << endl;
+
+	auto start = chrono::high_resolution_clock::now();
 	Solomon solver(instance);
 	Solution solution = solver.run();
-	solution.printToConsole();
+	auto end = chrono::high_resolution_clock::now();
+	long long duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 
-	std::string outputFilename;
-	if (argc < 3) { outputFilename = "rozwiazanie.txt"; }
-	else { outputFilename = argv[2]; }
 	solution.saveToFile(outputFilename);
+	cout << "STATS;"
+		<< instance.getCustomerCount() << ";"
+		<< solution.routes.size() << ";"
+		<< fixed << setprecision(2) << solution.totalDistance << ";"
+		<< fixed << setprecision(2) << solution.totalTime << ";"
+		<< duration << endl;
+	return 0;
 }

@@ -11,8 +11,8 @@ public:
 		: data(instance),
 		isVisited(instance.getCustomerCount(), false) {
 	}
-		bool canInsert(const Route& currentRoute, int customerID, int position);
-		double calculateScore(const Route& currentRoute, int customerID, int position);
-		Solution run();
-		Solution reduceVehicles(const Solution& initialSolution);
+	bool canInsert(const Route& currentRoute, int customerID, int position);
+	double calculateScore(const Route& currentRoute, int customerID, int position);
+	Solution run();
+	Solution reduceVehicles(const Solution& initialSolution);
 };

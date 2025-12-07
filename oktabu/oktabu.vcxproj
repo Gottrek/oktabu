@@ -130,19 +130,14 @@
     <ClCompile Include="data.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Solomon.cpp" />
+    <ClCompile Include="tabu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data.h" />
     <ClInclude Include="Solomon.h" />
+    <ClInclude Include="tabu.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\cvrptw1.txt" />
-    <Text Include="..\cvrptw2.txt" />
-    <Text Include="..\cvrptw3.txt" />
-    <Text Include="..\cvrptw4.txt" />
-    <Text Include="c101.txt" />
-    <Text Include="c102.txt" />
-    <Text Include="c103.txt" />
     <Text Include="ptest\C101.txt" />
     <Text Include="ptest\C102.txt" />
     <Text Include="ptest\C103.txt" />
@@ -204,9 +199,9 @@
     <Text Include="ptest\RC206.txt" />
     <Text Include="ptest\RC207.txt" />
     <Text Include="ptest\RC208.txt" />
-    <Text Include="r101.txt" />
-    <Text Include="r102.txt" />
-    <Text Include="r103.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="testerka.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

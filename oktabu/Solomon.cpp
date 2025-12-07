@@ -204,25 +204,26 @@ Solution Solomon::reduceVehicles(const Solution& initialSolution) {
 					break;
 				}
 				if (bestRouteLP < 0) return bestSolution; // bezpieczenstwo, moze sie da usunac
-				tempSolution.routes[bestRouteLP].path.insert(tempSolution.routes[bestRouteLP].path.begin() + bestPosition, lonelyCustomers[i]);
-				tempSolution.routes[bestRouteLP].currentLoad += data.getCustomer(lonelyCustomers[i]).demand;
+				Route najRoute = tempSolution.routes[bestRouteLP];
+				najRoute.path.insert(najRoute.path.begin() + bestPosition, lonelyCustomers[i]);
+				najRoute.currentLoad += data.getCustomer(lonelyCustomers[i]).demand;
 				clientAdded = true;
 				// aktualizuj dystans i czas trasy
-				tempSolution.routes[bestRouteLP].totalDistance = 0.0;
+				najRoute.totalDistance = 0.0;
 				double currentTime = 0.0;
-				for (int m = 1; m < tempSolution.routes[bestRouteLP].path.size(); ++m) {
-					int prevNode = tempSolution.routes[bestRouteLP].path[m - 1];
-					int currNode = tempSolution.routes[bestRouteLP].path[m];
+				for (int m = 1; m < najRoute.path.size(); ++m) {
+					int prevNode = najRoute.path[m - 1];
+					int currNode = najRoute.path[m];
 					const Customer& cust = data.getCustomer(currNode);
 
-					tempSolution.routes[bestRouteLP].totalDistance += data.getDistance(prevNode, currNode);
+					najRoute.totalDistance += data.getDistance(prevNode, currNode);
 
 					double travelTime = data.getDistance(prevNode, currNode);
 					double arrivalTime = currentTime + travelTime;
 					double startServiceTime = std::max(arrivalTime, (double)cust.readyTime);
 					currentTime = startServiceTime + cust.serviceTime;
 				}
-				tempSolution.routes[bestRouteLP].totalTime = currentTime;
+				najRoute.totalTime = currentTime;
 			}
 			if (!everyClientAdded) continue;
 			break;
