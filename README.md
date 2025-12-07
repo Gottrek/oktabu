@@ -73,28 +73,21 @@ W projekcie znajduje się skrypt testerka.py, który służy do przeprowadzania 
 
 Skrypt automatycznie:
 1. Wykrywa system operacyjny i plik wykonywalny.
-2. Uruchamia solver dla zdefiniowanych kombinacji parametrów (Tabu Size, Iteracje).
+2. Uruchamia solver dla zdefiniowanych kombinacji parametrów.
 3. Agreguje wyniki w czytelnej tabeli CSV.
-4. Zapisuje szczegółowe trasy w osobnych plikach.
+4. Zapisuje szczegółowe trasy w osobnych plikach tekstowych.
 
 Uruchomienie:
 python testerka.py
 
-Lokalizacja wyników:
-* wyniki_csv/ - pliki .csv z zestawieniem kosztów, liczby tras i czasów wykonania (gotowe do otwarcia w Excelu).
-* wyniki_raw/ - pliki .txt z dokładnym przebiegiem tras dla każdego testu.
+## Kluczowe pliki projektu
 
-## Struktura Projektu
-
-.
-├── main.cpp            # Punkt wejściowy programu, obsługa argumentów CLI
-├── Solomon.cpp / .h    # Implementacja heurystyki konstrukcyjnej Solomona
-├── tabu.cpp / .h       # Implementacja metaheurystyki Tabu Search
-├── data.cpp / .h       # Struktury danych (Graf, Klient, Trasa) i obsługa I/O
-├── testerka.py         # Skrypt automatyzujący testy
-├── ptest/              # Katalog z instancjami testowymi (pliki .txt)
-├── wyniki_csv/         # (Generowany automatycznie) Raporty zbiorcze
-└── wyniki_raw/         # (Generowany automatycznie) Szczegółowe wyniki
+* main.cpp - Główny plik programu, obsługa argumentów.
+* Solomon.cpp / .h - Implementacja algorytmu konstrukcyjnego.
+* tabu.cpp / .h - Implementacja algorytmu Tabu Search.
+* data.cpp / .h - Struktury danych i obsługa plików.
+* testerka.py - Skrypt do automatyzacji testów.
+* ptest/ - Katalog zawierający instancje testowe.
 
 ## Szczegóły implementacyjne
 
@@ -102,5 +95,4 @@ Lokalizacja wyników:
 * Reprezentacja: Rozwiązanie przechowywane jest jako wektor tras, gdzie każda trasa to wektor ID klientów.
 * Format danych: Obsługiwany format zgodny ze standardem benchmarków Solomona (1987).
 
-## Autor
-Projekt zrealizowany w ramach zajęć akademickich z optymalizacji dyskretnej.
+Projekt zrealizowany w ramach zajęć akademickich z optymalizacji kombinatorycznej.
