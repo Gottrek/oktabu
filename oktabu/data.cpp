@@ -63,14 +63,26 @@ void Solution::saveToFile(const std::string& filename) const {
 		return;
 	}
 
-	// 2. Pierwsza linia: liczba tras i dystans (5 miejsc po przecinku)
-	file << routes.size() << " "
+	// KROK A: Policz faktyczne, niepuste trasy (rozmiar > 2, bo 2 to tylko 0->0)
+	int nonEmptyRoutesCount = 0;
+	for (const auto& route : routes) {
+		if (route.path.size() > 2) {
+			nonEmptyRoutesCount++;
+		}
+	}
+
+	// 2. Pierwsza linia: SKORYGOWANA liczba tras i dystans
+	file << nonEmptyRoutesCount << " "
 		<< std::fixed << std::setprecision(5) << totalTime << "\n";
 
 	// 3. Kolejne linie: trasy
 	for (const auto& route : routes) {
+		// KROK B: Pomiñ puste trasy przy zapisie
+		if (route.path.size() <= 2) {
+			continue;
+		}
+
 		// Pêtla od 1 do size-2 pomija Depot na pocz¹tku (indeks 0) i na koñcu (ostatni indeks)
-		// Zak³adamy strukturê trasy w pamiêci: {0, klient, klient, 0}
 		for (size_t i = 1; i < route.path.size() - 1; ++i) {
 			file << route.path[i];
 

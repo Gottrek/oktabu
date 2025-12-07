@@ -24,6 +24,7 @@ private:
 	}
 	bool isValidMove(const Route& targetRoute, int customerID, int position);
 	double calculateDelta(const Route& fromRoute, const Route& toRoute, int customerID, int positionDest);
+	void updateRoute(Route& route);
 public:
 	TabuSearch(Instance& instance, int tenure, int maxIterations)
 		: data(instance),

@@ -1,5 +1,6 @@
 ﻿#include "data.h"
 #include "Solomon.h"
+#include "tabu.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -58,15 +59,22 @@ int main(int argc, char* argv[]) {
 	auto start = chrono::high_resolution_clock::now();
 	Solomon solver(instance);
 	Solution solution = solver.run();
+
+	TabuSearch tabuSolver(instance, tabuTenure, maxIterations);
+	Solution improvedSolution = tabuSolver.run(solution);
+
 	auto end = chrono::high_resolution_clock::now();
 	long long duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 
-	solution.saveToFile(outputFilename);
+	solution.printToConsole();
+	improvedSolution.printToConsole();
+
+	improvedSolution.saveToFile(outputFilename);
 	cout << "STATS;"
 		<< instance.getCustomerCount() << ";"
-		<< solution.routes.size() << ";"
-		<< fixed << setprecision(2) << solution.totalDistance << ";"
-		<< fixed << setprecision(2) << solution.totalTime << ";"
+		<< improvedSolution.routes.size() << ";"
+		<< fixed << setprecision(2) << improvedSolution.totalDistance << ";"
+		<< fixed << setprecision(2) << improvedSolution.totalTime << ";"
 		<< duration << endl;
 	return 0;
 }
