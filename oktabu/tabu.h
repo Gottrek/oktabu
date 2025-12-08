@@ -9,7 +9,6 @@ struct Move {
 	int positionInFromRoute;
 	int positionInToRoute;
 	double costDelta;
-
 };
 
 class TabuSearch {
@@ -19,12 +18,12 @@ private:
 	int maxIterations;
 	std::vector<std::vector<int>> tabuMatrix;
 
-	bool isTabu(int customerID, int targetRouteLP, int iteration) {
-				return tabuMatrix[customerID][targetRouteLP] > iteration;
-	}
 	bool isValidMove(const Route& targetRoute, int customerID, int position);
 	double calculateDelta(const Route& fromRoute, const Route& toRoute, int customerID, int positionDest);
 	void updateRoute(Route& route);
+	bool isTabu(int customerID, int targetRouteLP, int iteration) {
+		return tabuMatrix[customerID][targetRouteLP] > iteration;
+	}
 public:
 	TabuSearch(Instance& instance, int tenure, int maxIterations)
 		: data(instance),

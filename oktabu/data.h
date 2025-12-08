@@ -15,7 +15,7 @@ struct Customer {
 };
 
 struct Route {
-	std::vector<int> path; // IDs of customers in the route
+	std::vector<int> path; // IDs of customers
 	int currentLoad;
 	double totalDistance;
 	double totalTime;

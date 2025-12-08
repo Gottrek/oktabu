@@ -101,12 +101,10 @@ Solution TabuSearch::run(const Solution& initialSolution) {
 			}
 		}
 		if (bestMove.customerID == -1) break;
-		// wykonaj ruch
 		Route& fromRoute = currentSolution.routes[bestMove.fromRoute];
 		Route& toRoute = currentSolution.routes[bestMove.toRoute];
 		fromRoute.path.erase(fromRoute.path.begin() + bestMove.positionInFromRoute);
 		toRoute.path.insert(toRoute.path.begin() + bestMove.positionInToRoute, bestMove.customerID);
-		// aktualizuj
 		tabuMatrix[bestMove.customerID][bestMove.toRoute] = iteration + tabuTenure;
 		
 		updateRoute(fromRoute);

@@ -17,10 +17,8 @@ bool Solomon::canInsert(const Route& route, int customerID, int position) {
 		int currNode = tempPath[i];
 
 		const Customer& cust = data.getCustomer(currNode);
-
 		double travelTime = data.getDistance(prevNode, currNode);
 		double arrivalTime = currentTime + travelTime;
-
 		if (arrivalTime > cust.dueDate) return false;
 		
 		double startServiceTime = std::max(arrivalTime, (double)cust.readyTime);
@@ -161,7 +159,7 @@ Solution Solomon::reduceVehicles(const Solution& initialSolution) {
 		while (true) {
 			tempSolution = initialSolution;
 			int smallestRouteLP = -1;
-			int smallestLoad = INFINITY;
+			int smallestLoad = 100000000;
 			for (int i = 0; i < initialSolution.routes.size(); ++i) {
 				if (initialSolution.routes[i].currentLoad < smallestLoad && checkedRoutes[i] == false) {
 					smallestLoad = initialSolution.routes[i].currentLoad;

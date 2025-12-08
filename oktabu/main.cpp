@@ -59,6 +59,7 @@ int main(int argc, char* argv[]) {
 	auto start = chrono::high_resolution_clock::now();
 	Solomon solver(instance);
 	Solution solution = solver.run();
+	solution.printToConsole();
 
 	TabuSearch tabuSolver(instance, tabuTenure, maxIterations);
 	Solution improvedSolution = tabuSolver.run(solution);
@@ -66,9 +67,7 @@ int main(int argc, char* argv[]) {
 	auto end = chrono::high_resolution_clock::now();
 	long long duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 
-	solution.printToConsole();
 	improvedSolution.printToConsole();
-
 	improvedSolution.saveToFile(outputFilename);
 	cout << "STATS;"
 		<< instance.getCustomerCount() << ";"
