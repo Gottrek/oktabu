@@ -134,3 +134,12 @@ bool Instance::loadFromFile(const string& filename) {
 	}
 	return true;
 }
+
+void print_stats(const Instance& inst, const Solution& sol, const double& dur) {
+	std::cout << "STATS;"
+		<< inst.getCustomerCount() << ";"
+		<< sol.routes.size() << ";"
+		<< fixed << setprecision(2) << sol.totalDistance << ";"
+		<< fixed << setprecision(2) << sol.totalTime << ";"
+		<< dur << endl;
+}

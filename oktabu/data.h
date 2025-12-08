@@ -57,3 +57,5 @@ public:
 		return customers.size();
 	}
 };
+
+void print_stats(const Instance& inst, const Solution& sol, const double& dur);
