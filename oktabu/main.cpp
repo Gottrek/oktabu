@@ -44,8 +44,12 @@ int main(int argc, char* argv[]) {
 	std::cout << "Wczytano instancje z pliku: " << argv[1] << " liczba klientow: " << instance.getCustomerCount() << endl;
 
 	auto start = chrono::high_resolution_clock::now();
+
 	Solomon solver(instance);
 	Solution solution = solver.run();
+
+	// solution = solver.reduceVehicles(solution);
+	// Solution improvedSolution = solution;
 
 	TabuSearch tabuSolver(instance, tabuTenure, maxIterations);
 	Solution improvedSolution = tabuSolver.run(solution);

@@ -14,5 +14,5 @@ public:
 	bool canInsert(const Route& currentRoute, int customerID, int position);
 	double calculateScore(const Route& currentRoute, int customerID, int position);
 	Solution run();
-	Solution reduceVehicles(const Solution& initialSolution);
+	Solution reduceVehicles(Solution initialSolution);
 };

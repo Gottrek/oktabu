@@ -34,7 +34,7 @@ void Solution::printToConsole() const {
 		return;
 	}
 	cout << "Liczba tras: " << routes.size() << endl;
-	cout << fixed << setprecision(2);
+	cout << fixed << setprecision(5);
 	for (size_t i = 0; i < routes.size(); ++i) {
 		const Route& route = routes[i];
 		cout << "Trasa " << i + 1 << ": ";

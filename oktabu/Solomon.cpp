@@ -152,7 +152,7 @@ Solution Solomon::run() {
 	return solution;
 }
 
-Solution Solomon::reduceVehicles(const Solution& initialSolution) {
+Solution Solomon::reduceVehicles(Solution initialSolution) {
 		Solution bestSolution = initialSolution;
 		Solution tempSolution = initialSolution;
 		std::vector<bool> checkedRoutes(initialSolution.routes.size(), false);
@@ -185,8 +185,6 @@ Solution Solomon::reduceVehicles(const Solution& initialSolution) {
 					bestPosition = -1;
 					for (int k = 1; k < tempSolution.routes[j].path.size(); ++k) { // dla kazdej pozycji w trasie
 						double score = calculateScore(tempSolution.routes[j], lonelyCustomers[i], k);
-						std::cout << "Trasa " << j << " Poz " << k << " - Brak miejsca/czasu\n";
-						if (score == -INFINITY) std::cout << "wyrzucilem\n";
 						if (score == -INFINITY) continue;
 						if (score > bestScore) {
 							clientAdded = true;
@@ -202,7 +200,7 @@ Solution Solomon::reduceVehicles(const Solution& initialSolution) {
 					break;
 				}
 				if (bestRouteLP < 0) return bestSolution; // bezpieczenstwo, moze sie da usunac
-				Route najRoute = tempSolution.routes[bestRouteLP];
+				Route &najRoute = tempSolution.routes[bestRouteLP];
 				najRoute.path.insert(najRoute.path.begin() + bestPosition, lonelyCustomers[i]);
 				najRoute.currentLoad += data.getCustomer(lonelyCustomers[i]).demand;
 				clientAdded = true;
