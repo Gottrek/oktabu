@@ -4,7 +4,7 @@ Projekt jest implementacją algorytmu rozwiązującego **Problem Trasowania Poja
 
 Celem optymalizacji jest minimalizacja całkowitego czasu tras, na który składają się: czas przejazdu, czas oczekiwania oraz czas obsługi klienta.
 
-## 🚀 Metodyka
+## Metodyka
 
 Rozwiązanie opiera się na podejściu hybrydowym (dwufazowym):
 
@@ -17,13 +17,13 @@ Rozwiązanie opiera się na podejściu hybrydowym (dwufazowym):
    - Operator sąsiedztwa: Relocate (przeniesienie klienta między trasami).
    - Mechanizm Tabu: Pamięć krótkotrwała (Tabu List) zapobiega cykleniu i pozwala algorytmowi uciec z minimów lokalnych.
 
-## 📋 Wymagania
+## Wymagania
 
 - Kompilator C++: Obsługujący standard C++17 (np. GCC, Clang, MSVC).
 - System operacyjny: Windows, Linux lub macOS.
 - Python 3.x: (Opcjonalnie) Wymagany wyłącznie do uruchomienia skryptów automatyzujących testy (testerka.py).
 
-## 🛠️ Kompilacja i Uruchomienie
+## Kompilacja i Uruchomienie
 
 Projekt nie wymaga zewnętrznych bibliotek. Kod źródłowy jest samowystarczalny.
 
@@ -46,7 +46,7 @@ Dla użytkowników terminala. Upewnij się, że jesteś w głównym katalogu pro
 3. Zbuduj projekt: Build -> Build Solution (Ctrl + Shift + B).
 4. Plik wykonywalny oktabu.exe znajdzie się w katalogu x64/Release.
 
-## 💻 Instrukcja użycia (CLI)
+## Instrukcja użycia (CLI)
 
 Program przyjmuje ścieżkę do pliku wejściowego jako pierwszy argument oraz opcjonalne flagi sterujące.
 
@@ -70,7 +70,7 @@ Przykłady:
 2. Uruchomienie ze strojeniem parametrów i własnym plikiem wyjściowym:
    ./oktabu ptest/c102.txt -t 20 -i 5000 -o wyniki/moj_wynik.txt
 
-## 🧪 Automatyzacja testów (Python)
+## Automatyzacja testów (Python)
 
 W projekcie znajduje się skrypt `testerka.py`, który służy do przeprowadzania masowych testów na benchmarkach (instancje Solomona).
 
@@ -83,7 +83,7 @@ Skrypt automatycznie:
 Uruchomienie:
 python testerka.py
 
-## 📂 Kluczowe pliki projektu
+## Kluczowe pliki projektu
 
 - main.cpp: Punkt wejścia, obsługa argumentów CLI.
 - Solomon.cpp / .h: Implementacja algorytmu konstrukcyjnego.
@@ -92,7 +92,7 @@ python testerka.py
 - testerka.py: Skrypt do automatyzacji testów.
 - ptest/: Katalog z przykładowymi instancjami testowymi.
 
-## ⚙️ Szczegóły implementacyjne
+## Szczegóły implementacyjne
 
 - Delta Evaluation: Algorytm wykorzystuje ocenę przyrostową (delta) do szybkiego szacowania kosztu ruchu. Zamiast przeliczać całą trasę (O(N)), zmiana kosztu obliczana jest w czasie O(1), co pozwala na sprawdzenie tysięcy sąsiadów w ułamku sekundy.
 - Reprezentacja: Rozwiązanie przechowywane jest jako wektor tras, gdzie każda trasa to wektor ID klientów.
